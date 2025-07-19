@@ -32,15 +32,42 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     char *mantissa = strtok(buffer, "e");
     char *exponent = strtok(NULL, "e");
 
-    double mantissa_float = atof(mantissa);
+    *(strchr(buffer, 'e')) = '\0';
+
+    long int mantissa_int = 0;
     int exponent_int = atoi(exponent);
 
-    if(strlen(mantissa)>2){
+    int mantissa_length = strlen(mantissa);
+    while(*mantissa != '\0') {
+        if(*mantissa == '.'){
+            mantissa++;
+            continue;
+        }
+        mantissa_int = mantissa_int * 10 + (*mantissa - '0');
+        mantissa++;
+    }
 
+    if(mantissa_length > 2){
+        exponent_int -= mantissa_length - 2;
     }
 
     s21_from_int_to_decimal(mantissa_int, dst);
-    set_exponent(dst, abs(exponent_int));
+    int final_scale = exponent_int;
+
+    while (final_scale < 0) {
+        if (multiply_by_10(dst)) {
+            return 1;
+        }
+        final_scale++;
+    }
+
+    while (final_scale > 28) {
+        divide_by_10(dst);
+        final_scale--;
+    }
+
+    set_exponent(dst, final_scale);
+
 
     return 0;
 }

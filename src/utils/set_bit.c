@@ -1,10 +1,6 @@
 #include "../s21_decimal.h"
 #include <stdlib.h>
 
-/*
- * @brief
- *  s21_decimal arrayni i-elementining j-bitini 1 qiladi
- */
 
 int set_bit(s21_decimal * number, int i, int j){
     if(number == NULL) return 1; //NULL ref error

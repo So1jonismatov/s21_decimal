@@ -7,5 +7,10 @@ int set_sign(s21_decimal * number);
 int unset_sign(s21_decimal * number);
 int set_exponent(s21_decimal *number, int exponent);
 void remove_char(const char *src, char *dest, char to_remove);
+int divide_by_10(s21_decimal *d);
+int multiply_by_10(s21_decimal *d);
+int get_exponent(s21_decimal number);
+int get_sign(s21_decimal number);
+
 
 #endif

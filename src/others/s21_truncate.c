@@ -3,10 +3,11 @@
 #include <stdlib.h>
 
 int s21_truncate(s21_decimal value, s21_decimal *result) {
+    int error = 0;
     if (result == NULL) {
         return 1;
     }
-    *result = value;
+    error = copy_decimal(value, result);
 
     int scale = get_exponent(value);
     if (scale == 0) {
@@ -15,7 +16,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
     for (int i = 0; i < scale; i++) {
         divide_by_10(result);
     }
-    set_exponent(result, 0);
+    error |= set_exponent(result, 0);
 
-    return 0; // OK
+    return error; // OK
 }

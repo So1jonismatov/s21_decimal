@@ -13,6 +13,8 @@ int get_exponent(s21_decimal number);
 int get_sign(s21_decimal number);
 int is_zero(s21_decimal number);
 int make_same_exponent(s21_decimal *a, s21_decimal *b);
-
+int copy_decimal(s21_decimal src, s21_decimal *dst);
+int get_frac(s21_decimal value, s21_decimal *result);
+int s21_ceil(s21_decimal value, s21_decimal *result);
 
 #endif

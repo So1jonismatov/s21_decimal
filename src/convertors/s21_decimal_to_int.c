@@ -1,8 +1,6 @@
 #include <limits.h>
 #include <stdlib.h>
 #include "../s21_decimal.h"
-#include "../utils/s21_utils.h"
-#include "../others/s21_others.h"
 
 
 int s21_from_decimal_to_int(s21_decimal src, int *dst) {

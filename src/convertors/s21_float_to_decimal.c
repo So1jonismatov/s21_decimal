@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../s21_decimal.h"
-#include "../utils/s21_utils.h"
-#include "s21_convertors.h"
 
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     if (!dst) return 1;

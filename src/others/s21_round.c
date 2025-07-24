@@ -1,8 +1,5 @@
+#include <stdio.h>
 #include "../s21_decimal.h"
-#include "../utils/s21_utils.h"
-#include "../convertors/s21_convertors.h"
-#include "../comparison/s21_comparison.h"
-#include "s21_others.h"
 
 int s21_round(s21_decimal value, s21_decimal *result) {
     if (result == NULL) {

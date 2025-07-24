@@ -1,10 +1,5 @@
 #include <stdlib.h>
-#include "s21_others.h"
 #include "../s21_decimal.h"
-#include "../utils/s21_utils.h"
-#include "../arithmetic/s21_arithmetic.h"
-#include "../comparison/s21_comparison.h"
-#include "../convertors/s21_convertors.h"
 
 int s21_floor(s21_decimal value, s21_decimal *result) {
     if (result == NULL) return 1;

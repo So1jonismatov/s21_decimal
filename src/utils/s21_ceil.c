@@ -1,9 +1,5 @@
+#include <stdlib.h>
 #include "../s21_decimal.h"
-#include "../comparison/s21_comparison.h"
-#include "../others/s21_others.h"
-#include "../convertors/s21_convertors.h"
-#include "s21_utils.h"
-#include "../arithmetic/s21_arithmetic.h"
 
 
 int s21_ceil(s21_decimal value, s21_decimal *result) {
@@ -23,7 +19,7 @@ int s21_ceil(s21_decimal value, s21_decimal *result) {
             s21_decimal one = {0};
             error |= s21_from_int_to_decimal(1, &one);
             error |= s21_add(truncated_value, one, result);
-        } else
+        } else{
             error = copy_decimal(truncated_value, result);
         }
     }

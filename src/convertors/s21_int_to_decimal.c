@@ -1,5 +1,4 @@
 #include "../s21_decimal.h"
-#include "../utils/s21_utils.h"
 #include <string.h>
 
 

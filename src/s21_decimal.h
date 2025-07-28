@@ -10,16 +10,6 @@
                    
 
 */
-/*
-    _  _____ ____  _  _    ___  _ _      _     
-   / |/  __//  __\/ \/ \   \  \/// \  /|/ \__/|
-   | ||  \  |  \/|| || |    \  / | |\ ||| |\/||
-/\_| ||  /_ |    /| || |_/\ / /  | | \||| |  ||
-\____/\____\\_/\_\\_/\____//_/   \_/  \|\_/  \|
-                                               
-                        
-
-*/
 
 
 #ifndef _S21_DECIMAL_
@@ -59,7 +49,7 @@ int sub_abs(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int shift_left(s21_decimal *d);
 int get_bit(s21_decimal d, int index);
 void integer_division(s21_decimal dividend, s21_decimal divisor, s21_decimal *quotient, s21_decimal *remainder);
-
+int bank_round(s21_decimal *value, int remainder);
 /*
 
            █████    █████                                
@@ -144,5 +134,3 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
 
 #endif
-
-

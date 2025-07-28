@@ -1,71 +1,64 @@
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../s21_decimal.h"
+#include <math.h>
+#include <string.h>
 
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
+    // Step 1: Handle error cases and special values
     if (!dst) return 1;
     memset(dst, 0, sizeof(s21_decimal));
-    // manashu error joylarida return 1 ligi noaniq
 
-    if (isnan(src)) {
+    if (isnan(src) || isinf(src)) {
         return 1;
     }
-    if (isinf(src) || fabs(src) >= 7.9228162514264337593543950335e+28) {
-        return 1;
-    }
-    if (src == 0.0f || fabsf(src) < 1e-28f) {
-        return 1;
+
+    // Step 2: Handle sign and zero
+    if (src == 0.0f) {
+        return 0; // dst is already zeroed out
     }
 
     if (src < 0) {
-        src = -src;
         set_sign(dst);
+        src = -src;
     }
 
-    char buffer[50];
-    sprintf(buffer, "%.7e", src);
+    // Step 3: Check if the number is within the representable range
+    if (src > 7.92281625e+28f) { // Max decimal value
+        return 1;
+    }
+    if (src < 1e-28f) {
+        return 1;
+    }
 
-    char *mantissa = strtok(buffer, "e");
-    char *exponent = strtok(NULL, "e");
+    // Step 4: Normalize the float and determine the scale
+    int scale = 0;
+    // Bring the number into a range where it has 7 integer digits
+    while (src < 1000000.0f) {
+        src *= 10.0f;
+        scale++;
+    }
 
-    *(strchr(buffer, 'e')) = '\0';
+    // Perform rounding for the 7th significant digit
+    src = roundf(src);
 
-    long int mantissa_int = 0;
-    int exponent_int = atoi(exponent);
+    // If rounding caused overflow, adjust the scale
+    while (src >= 10000000.0f) {
+        src /= 10.0f;
+        scale--;
+    }
 
-    int mantissa_length = strlen(mantissa);
-    while(*mantissa != '\0') {
-        if(*mantissa == '.'){
-            mantissa++;
-            continue;
+    // Step 5: Write the resulting integer mantissa to the decimal
+    dst->bits[0] = (unsigned int)src;
+
+    // Step 6: Set the final scale
+    if (scale > 28) {
+        // This case should be rare due to prior checks, but as a safeguard...
+        // We must reduce the mantissa until the scale is valid.
+        while (scale > 28) {
+            divide_by_10(dst);
+            scale--;
         }
-        mantissa_int = mantissa_int * 10 + (*mantissa - '0');
-        mantissa++;
     }
-
-    if(mantissa_length > 2){
-        exponent_int -= mantissa_length - 2;
-    }
-
-    s21_from_int_to_decimal(mantissa_int, dst);
-    int final_scale = exponent_int;
-
-    while (final_scale < 0) {
-        if (multiply_by_10(dst)) {
-            return 1;
-        }
-        final_scale++;
-    }
-
-    while (final_scale > 28) {
-        divide_by_10(dst);
-        final_scale--;
-    }
-
-    set_exponent(dst, final_scale);
-
+    set_exponent(dst, scale);
 
     return 0;
 }

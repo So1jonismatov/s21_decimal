@@ -6,7 +6,7 @@ int unset_sign(s21_decimal * number){
         return 1; // error
     }
 
-    number->bits[3] &= ((unsigned int) 0); // Bitmask shu yerda qilamz
+    number->bits[3] &= ~(1 << 31); // Bitmask shu yerda qilamz
 
     return 0; // OK
 }
